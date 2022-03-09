@@ -1,0 +1,209 @@
+/*
+ * @NOTE: Prepend a `~` to css file paths that are in your node_modules
+ *        See https://github.com/webpack-contrib/sass-loader#imports
+ */
+body {
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: white;
+  width: 100vw;
+  height: 100vh;
+  font-family: sans-serif;
+  overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(200.96deg,
+      #fedc2a -29.09%,
+      #dd5789 51.77%,
+      #7a2c9e 129.35%);
+}
+
+button {
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  appearance: none;
+  font-size: 1.3rem;
+  box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
+    0px 18px 88px -4px rgba(24, 39, 75, 0.14);
+  transition: all ease-in 0.1s;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+button:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  height: fit-content;
+  width: fit-content;
+  margin: 10px;
+}
+
+a:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.el-file {
+  width: 80%;
+  height: auto;
+}
+
+.el-col-3 {
+  flex: 25%;
+}
+
+.el-col-1 {
+  flex: 10%;
+}
+
+.el-col-2 {
+  flex: 20%;
+}
+
+.el-col-5 {
+  flex: 40%;
+}
+
+.el-col-6 {
+  flex: 45%;
+}
+
+.el-file-body {
+  width: 100%;
+  height: auto;
+}
+
+.el-body-cell,
+.el-file-header {
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+}
+
+.el-body-cell div,
+.el-file-header div {
+  border: 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.el-body-cell button {
+  padding: 5px 10px;
+  border-radius: 2px;
+  margin: 5px;
+}
+
+.mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: auto;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.loading span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: lightgreen;
+  position: absolute;
+  animation: load 1.04s ease infinite;
+}
+
+@keyframes load {
+  0% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(.3);
+    opacity: 0.5;
+  }
+}
+
+.loading span:nth-child(1) {
+  left: 0;
+  top: 50%;
+  margin-top: -10px;
+  animation-delay: 0.13s;
+}
+
+.loading span:nth-child(2) {
+  left: 14px;
+  top: 14px;
+  animation-delay: 0.26s;
+}
+
+.loading span:nth-child(3) {
+  left: 50%;
+  top: 0;
+  margin-left: -10px;
+  animation-delay: 0.39s;
+}
+
+.loading span:nth-child(4) {
+  top: 14px;
+  right: 14px;
+  animation-delay: 0.52s;
+}
+
+.loading span:nth-child(5) {
+  right: 0;
+  top: 50%;
+  margin-top: -10px;
+  animation-delay: 0.65s;
+}
+
+.loading span:nth-child(6) {
+  right: 14px;
+  bottom: 14px;
+  animation-delay: 0.78s;
+}
+
+.loading span:nth-child(7) {
+  bottom: 0;
+  left: 50%;
+  margin-left: -10px;
+  animation-delay: 0.91s;
+}
+
+.loading span:nth-child(8) {
+  bottom: 14px;
+  left: 14px;
+  animation-delay: 1.04s;
+}

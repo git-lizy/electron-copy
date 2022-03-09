@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>文件复制</title>
+  <link rel="stylesheet" type="text/css" href="./public/style.css" title="style" />
+  <script src="./render/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <p><button onclick="handleCopy()">复制</button></p>
+    <p>
+      <button @click="addItem">添加</button>
+      <button @click="clearFile">清空</button>
+    </p>
+    <div class="el-file">
+      <div class="el-file-header">
+        <div class="el-col-1">序号</div>
+        <div class="el-col-5">文件路径</div>
+        <div class="el-col-5">目标路径</div>
+        <div class="el-col-1">操作</div>
+      </div>
+      <div class="el-file-body">
+        <div class="el-body-cell" v-for="(file, index) in files" :key="index">
+          <div class="el-col-1">{{index + 1}}</div>
+          <div class="el-col-5">
+            <template v-if="file.srcDir">{{file.srcDir}}</template>
+            <template v-else>
+              <button :sub="index" @click="handleOpenFileClick('openFile', 'read', index)">选取文件</button>
+              <button :sub="index" @click="handleOpenFileClick('openDirectory', 'read', index)">选取文件夹</button>
+            </template>
+          </div>
+          <div class="el-col-5">
+            <template v-if="file.tarDir">{{file.tarDir}}</template>
+            <template v-else>
+              <button @click="handleOpenFileClick('openDirectory', 'copy', index)">目标文件夹</button>
+            </template>
+          </div>
+          <div class="el-col-1">
+            <button @click="deleteReadFile(index)">删除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mask" v-show="visibleLoading">
+      <div class="loading">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <script src="./render/main.js"></script>
+  <script src="./render/index.js"></script>
+  <script src="./render/fs.js"></script>
+  <script>
+    ipcRenderer.on('selectedItem', async (event, param) => {
+      console.log('selectedItem', param);
+      const { files, opertion } = param
+      if (files.length) {
+        switch (opertion) {
+          case 'read':
+            updateReadFiles(files)
+            break
+          case 'copy':
+            updateCopyFiles(files)
+            break
+          default: break
+        }
+      }
+    })
+
+    /** 读取需要copy的文件或者文件夹 */
+    const updateReadFiles = async (_files) => {
+      if (_files && _files.length) {
+        vm.updateFileItem('read', _files[0])
+      }
+    }
+
+    /** 读取需要覆盖的文件夹 */
+    const updateCopyFiles = async (_files) => {
+      if (_files && _files.length) {
+        vm.updateFileItem('copy', _files[0])
+      }
+    }
+
+    /** 覆盖文件 */
+    const handleCopy = async () => {
+      vm.showLoading()
+      if (!vm.files.length) {
+        vm.hideLoading()
+        return alert('请先选择文件！')
+      }
+      try {
+        setTimeout(async () => {
+          const msg = await copyFileToFolder(vm.files, vm.overlayFiles)
+          vm.hideLoading()
+          alert(msg)
+        }, 50)
+      } catch (error) {
+        vm.hideLoading()
+        console.log(error)
+        alert(error)
+      }
+    }
+  </script>
+</body>
+
+</html>
